@@ -17,6 +17,7 @@ TensorFlow/Keras/PyTorch: Thư viện học sâu cho việc xây dựng và hu�
 OpenCV: Thư viện xử lý ảnh để trích xuất và phát hiện khuôn mặt.
 
 Cài đặt và sử dụng: 
+
 B1: Clone dự án về máy: 
 git clone https://github.com/username/project-name.git
 
