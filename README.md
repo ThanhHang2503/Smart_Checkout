@@ -1,4 +1,5 @@
 Giới thiệu
+\n
 Dự án này sử dụng các mô hình học sâu như FaceNet và ArcFace+ResNet để phát triển hệ thống nhận diện khuôn mặt, nhằm ứng dụng trong các bài toán nhận dạng và xác thực khuôn mặt. Dự án tập trung vào việc xử lý dữ liệu khuôn mặt trong các môi trường không kiểm soát và sử dụng các thuật toán tiên tiến để cải thiện độ chính xác và khả năng phân biệt khuôn mặt.
 
 Các mô hình sử dụng:
