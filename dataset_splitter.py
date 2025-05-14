@@ -204,7 +204,7 @@ print_split_info(train_data, "Train")
 print_split_info(val_data, "Validation")
 print_split_info(test_data, "Test")
 
-# 12. Kiểm tra overlap
+12. Kiểm tra overlap
 train_ids = set([person for person in train_identities if any(img_path.startswith(os.path.join(lfw_root, person)) for img_path, _ in zip(train_data[0], train_data[1]))])
 val_ids = set([person for person in train_identities if any(img_path.startswith(os.path.join(lfw_root, person)) for img_path, _ in zip(val_data[0], val_data[1]))])
 test_ids = set([person for person in test_identities if any(img_path.startswith(os.path.join(lfw_root, person)) for img_path, _ in zip(test_data[0], test_data[1]))])
