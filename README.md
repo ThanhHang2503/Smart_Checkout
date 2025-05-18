@@ -1,29 +1,112 @@
-Giới thiệu
 
-Dự án này sử dụng các mô hình học sâu như FaceNet và ArcFace+ResNet để phát triển hệ thống nhận diện khuôn mặt, nhằm ứng dụng trong các bài toán nhận dạng và xác thực khuôn mặt. Dự án tập trung vào việc xử lý dữ liệu khuôn mặt trong các môi trường không kiểm soát và sử dụng các thuật toán tiên tiến để cải thiện độ chính xác và khả năng phân biệt khuôn mặt.
+# Nhận Diện Khuôn Mặt Thông Minh với LFW Dataset
 
-Các mô hình sử dụng:
+## 🌟 Giới Thiệu
 
-FaceNet (Triplet Loss): Sử dụng mô hình học sâu để tạo ra các vector đặc trưng cho khuôn mặt. FaceNet giúp chuyển đổi khuôn mặt thành các vector có thể dễ dàng so sánh với nhau bằng khoảng cách Euclidean.
+Dự án này hướng đến việc **xây dựng và so sánh hai mô hình học sâu** cho bài toán nhận diện khuôn mặt: **FaceNet (Triplet Loss)** và **ResNet18 + ArcFace (Additive Angular Margin Loss)**. Mục tiêu chính là xác định mô hình phù hợp hơn cho các ứng dụng xác thực thông minh trong điều kiện thực tế (ví dụ: chấm công, bảo mật, nhận diện khách hàng...).
 
-ArcFace + ResNet: Sử dụng mô hình ArcFace, với cải tiến margin góc để phân biệt khuôn mặt tốt hơn, kết hợp với mạng ResNet để nâng cao hiệu suất nhận diện khuôn mặt.
+Bộ dữ liệu sử dụng: **LFW (Labeled Faces in the Wild)** – tập ảnh khuôn mặt trong môi trường không kiểm soát, có sự đa dạng về biểu cảm, ánh sáng và góc nhìn.
 
-Công nghệ sử dụng
+## 🧠 Các Thành Phần Chính
 
-Python: Ngôn ngữ lập trình chính để phát triển và triển khai hệ thống.
+### 1. 📊 Phân Tích Dữ Liệu (EDA)
+- `lfw_analysis.py`: Phân tích tổng quan bộ dữ liệu LFW, tạo biểu đồ số lượng ảnh theo từng người, phân bố dữ liệu.
+- `eda.py`, `edaTrain.py`: Phân tích đặc trưng tập cặp ảnh khớp và không khớp (matching/mismatching pairs).
 
-TensorFlow/Keras/PyTorch: Thư viện học sâu cho việc xây dựng và huấn luyện mô hình.
+### 2. 🛠️ Chuẩn Bị Dữ Liệu
+- `dataset_splitter.py`: Tách dữ liệu thành tập huấn luyện, kiểm định và kiểm thử. Cung cấp `FaceDataset` và `DataLoader`.
 
-OpenCV: Thư viện xử lý ảnh để trích xuất và phát hiện khuôn mặt.
+### 3. 🏋️ Huấn Luyện Mô Hình
+- `train_facenet.py`: Huấn luyện FaceNet (InceptionResNetV1 tiền huấn luyện VGGFace2), sử dụng Triplet Loss.
+- `train_resnet18.py`: Huấn luyện ResNet18 (pretrained ImageNet) với ArcFace Loss, tối ưu phân biệt góc giữa các vector embedding.
 
-Cài đặt và sử dụng: 
+### 4. 📈 Đánh Giá Hiệu Suất
+- `evaluate.py`, `evalutateVer2.py`:
+  - Tính toán embedding từ các cặp ảnh.
+  - Đo khoảng cách Euclidean / cosine giữa embedding.
+  - Đánh giá Accuracy, Precision, Recall, F1-score, AUC.
+  - Vẽ ROC curve, confusion matrix, biểu đồ phân phối khoảng cách.
 
-B1: Clone dự án về máy: 
-git clone https://github.com/username/project-name.git
+### 5. 👁️ Nhận Diện Thời Gian Thực
+- `Face_Indentification.py`:
+  - Dùng webcam để phát hiện và nhận diện khuôn mặt.
+  - Trích xuất embedding qua `insightface`.
+  - So sánh với ảnh tham chiếu bằng cosine similarity.
 
-B2: Cài đặt các thư viện cần thiết:
+### 6. 🧭 Sơ Đồ Quy Trình
+- `pipeline_diagram.py`: Sinh sơ đồ `pipeline_overview.png` mô tả toàn bộ luồng xử lý của hệ thống.
+
+## ⚙️ Công Nghệ Sử Dụng
+
+- **Ngôn ngữ:** Python
+- **Học sâu:** PyTorch, facenet-pytorch, torchvision
+- **Tiền xử lý & trực quan hóa:** OpenCV, NumPy, Pandas, Matplotlib, Seaborn
+- **Real-time inference:** insightface
+- **Sơ đồ quy trình:** graphviz
+
+## 🚀 Hướng Dẫn Cài Đặt
+
+1. **Clone dự án**
+```bash
+git clone https://github.com/ThanhHang2503/Smart_Checkout
+cd Smart_Checkout
+```
+
+2. **Cài thư viện phụ thuộc**
+```bash
 pip install -r requirements.txt
+```
 
-B3: Tiến hành huấn luyện mô hình (nếu chưa có mô hình đã huấn luyện)
+> ⚠️ *`insightface` và `graphviz` cần thêm các bước cài đặt hệ thống. Tham khảo tài liệu chính thức.*
 
-B4: Sử dụng mô hình đã huấn luyện để nhận diện khuôn mặt
+3. **Chuẩn bị dữ liệu**
+- Tải tập dữ liệu `lfw-deepfunneled` và các tệp CSV.
+- Link dataset: https://www.kaggle.com/datasets/jessicali9530/lfw-dataset
+- Cập nhật đường dẫn trong các tệp `.py`.
+- Chạy:
+```bash
+python dataset_splitter.py
+```
+
+4. **Huấn luyện mô hình**
+```bash
+python train_facenet.py
+python train_resnet18.py
+```
+
+5. **Đánh giá mô hình**
+```bash
+python evaluate.py
+python evalutateVer2.py
+```
+
+6. **Chạy demo nhận diện webcam**
+```bash
+python Face_Indentification.py
+```
+- Nhấn `s` để lưu khuôn mặt tham chiếu.
+- Nhấn `q` để thoát.
+
+## 🗂️ Cấu Trúc Thư Mục
+
+```
+Smart_Checkout/
+├── models/
+│   ├── facenet.pth
+│   └── resnet18_arcface.pth
+├── results/
+│   ├── roc_comparison.png
+│   ├── confusion_matrix_*.png
+│   ├── distance_distribution_*.png
+│   └── metrics_comparison.png
+├── *.py (các tập tin code)
+├── requirements.txt
+├── README.md
+└── *.png (biểu đồ và sơ đồ)
+```
+
+## ✅ Kết Quả Mong Đợi
+
+- Mô hình được huấn luyện và lưu tại `models/`.
+- Biểu đồ và báo cáo đánh giá chi tiết tại `results/`.
+- Ứng dụng demo real-time có thể nhận diện khuôn mặt qua webcam.
