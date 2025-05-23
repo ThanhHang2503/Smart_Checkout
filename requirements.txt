@@ -1,10 +1,15 @@
-torch
-torchvision
-pandas
+# PyTorch (CUDA 12.1)
+torch==2.2.2
+torchvision==0.17.2
+torchaudio==2.2.2
+
+# Các thư viện phụ trợ
+pandas>=1.5
 opencv-python
-scikit-learn
+scikit-learn>=1.2,<1.4
 matplotlib
 seaborn
-facenet-pytorch
-insightface
+facenet-pytorch==2.6.0
+insightface==0.7.3
+onnxruntime
 tqdm
